@@ -67,7 +67,10 @@ app.use('/api/order_history', orderHistoryRoutes);
 
 // Static Files and Frontend Fallback
 app.use('/img', express.static(path.join(__dirname, '../frontend/img')));
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "index.html"));
+});
+
 app.get('*', (req, res) => {
   if (!req.url.startsWith('/api/')) {
     return res.sendFile(path.join(__dirname, '../frontend/index.html'));
